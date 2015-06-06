@@ -6,8 +6,6 @@ coffee-annotate supports to annotate coffee-script methods (and functions).
 How to Install
 --------------
 
-[WIP]
-
 ```bash
 npm i -S coffee-annotate
 ```
