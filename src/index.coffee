@@ -1,10 +1,10 @@
 assign = require 'object-assign'
 
-id = (x) -> x
+returnBody = (target) -> target.body
 
 error = (message) -> throw new Error message
 
-annotate = (name, callback = id) -> (attributes) ->
+annotate = (name, decorator = returnBody) -> (attributes) ->
   # preserve this (constructor function) in order to
   # assign the method into constructor function's prototype.
   self = @
@@ -13,7 +13,7 @@ annotate = (name, callback = id) -> (attributes) ->
     target = prepareTarget functionOrMethod
 
     annotations = target.body.annotations
-    decorated = callback target, attributes
+    decorated = decorator target, attributes
     unless decorated.annotations?
       decorated.annotations = __target: target.name
 
