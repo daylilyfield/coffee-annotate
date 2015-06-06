@@ -1,7 +1,12 @@
 {
   "name": "coffee-annotate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "coffee-annotate supports to annotate coffee-script methods (and functions)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daylilyfield/coffee-annotate"
+  },
+  "bugs": "https://github.com/daylilyfield/coffee-annotate/issues",
   "main": "lib/index.js",
   "scripts": {
     "build": "coffee -c -o ./lib/ src/",
@@ -9,6 +14,7 @@
   },
   "author": "daylilyfield",
   "license": "MIT",
+  "keywords": ["coffeescript", "annotation", "decorator"],
   "devDependencies": {
     "coffee-script": "^1.9.3",
     "jasmine-node": "^1.14.5",
