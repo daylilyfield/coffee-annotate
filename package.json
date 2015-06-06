@@ -1,0 +1,17 @@
+{
+  "name": "coffee-annotate",
+  "version": "0.0.1",
+  "description": "coffee-annotate supports to annotate coffee-script methods (and functions)",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "coffee -c -o ./lib/ src/",
+    "test": "jasmine-node --coffee spec/"
+  },
+  "author": "daylilyfield",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.9.3",
+    "jasmine-node": "^1.14.5",
+    "object-assign": "^3.0.0"
+  }
+}
