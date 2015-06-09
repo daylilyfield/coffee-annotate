@@ -70,6 +70,27 @@ doStuff = $foo(key: 'value') ->
 console.log doStuff.annotations.foo # print {key: 'value'}
 ```
 
+if your annotation don't need to accept any attributes, you can write annotations with `annotate.noAttr` function.
+
+```coffeescript
+annotate = require 'coffee-annotate'
+
+class A
+
+  @foo: annotate.noAttr 'foo'
+
+class B extends A
+
+  @foo \
+  doStuff: ->
+    # do something
+
+b = new B
+
+console.log b.doStuff.annotations.foo # print {key: 'value'}
+```
+
+
 API
 ---
 
@@ -87,6 +108,10 @@ API
   `name` property is the annotation's name. and `body` property is the function
   which is annotated. `attributes` parameter is annotation's arguments, so it
   could be any type.
+
+### annotate.noAttr(name, decorator)
+
+same as `annotate` but annotation can't accept any attributes. 
 
 How to Test
 -----------

@@ -2,30 +2,36 @@ assign = require 'object-assign'
 
 returnBody = (target) -> target.body
 
+
 error = (message) -> throw new Error message
 
+
 annotate = (name, decorator = returnBody) -> (attributes) ->
-  # preserve this (constructor function) in order to
-  # assign the method into constructor function's prototype.
-  self = @
+  makeAnalyzer name, decorator, attributes, @
 
-  (functionOrMethod) ->
-    target = prepareTarget functionOrMethod
 
-    annotations = target.body.annotations
-    decorated = decorator target, attributes
-    unless decorated.annotations?
-      decorated.annotations = __target: target.name
+annotate.noAttr = (name, decorator = returnBody) ->
+  makeAnalyzer name, decorator, {}
 
-    decorated.annotations[name] = attributes
 
-    if annotations?
-      decorated.annotations = assign {}, decorated.annotations, annotations
+makeAnalyzer = (name, decorator, attributes, self) -> (functionOrMethod) ->
+  target = prepareTarget functionOrMethod
 
-    unless decorated.annotations.__target is ''
-      self::[decorated.annotations.__target] = decorated
+  annotations = target.body.annotations
+  decorated = decorator target, attributes
+  unless decorated.annotations?
+    decorated.annotations = __target: target.name
 
-    decorated
+  decorated.annotations[name] = attributes
+
+  if annotations?
+    decorated.annotations = assign {}, decorated.annotations, annotations
+
+  unless decorated.annotations.__target is ''
+    self ?= @
+    self::[decorated.annotations.__target] = decorated
+
+  decorated
 
 
 prepareTarget = (functionOrMethod) ->

@@ -82,3 +82,33 @@ describe 'coffee-annotate', ->
     expect(z.annotations.x.k).toBe 'v'
     expect(found).toBe yes
 
+  it 'should read an no-attributes-annotation on method', ->
+
+    found = yes
+
+    class A
+
+      @x = annotate.noAttr 'x', (t) -> found = yes; t.body
+
+    class B extends A
+
+      @x \
+      y: -> 'y'
+
+    b = new B
+
+    expect(b.y()).toBe 'y'
+    expect(b.y.annotations.x).toBeDefined
+    expect(found).toBe yes
+
+  it 'should read an no-attributes-annotation on function', ->
+
+    found = yes
+
+    x = annotate.noAttr 'x', (t) -> found = yes; t.body
+
+    z = x -> 'z'
+
+    expect(z()).toBe 'z'
+    expect(z.annotations.x).toBeDefined
+    expect(found).toBe yes

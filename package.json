@@ -1,6 +1,6 @@
 {
   "name": "coffee-annotate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "coffee-annotate supports to annotate coffee-script methods (and functions)",
   "repository": {
     "type": "git",
