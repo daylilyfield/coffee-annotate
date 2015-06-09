@@ -1,6 +1,6 @@
 {
   "name": "coffee-annotate",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "coffee-annotate supports to annotate coffee-script methods (and functions)",
   "repository": {
     "type": "git",
@@ -9,7 +9,8 @@
   "bugs": "https://github.com/daylilyfield/coffee-annotate/issues",
   "main": "lib/index.js",
   "scripts": {
-    "build": "coffee -c -o ./lib/ src/",
+    "prepublish": "npm run build",
+    "build": "coffee -c -o lib src",
     "test": "jasmine-node --coffee spec/"
   },
   "author": "daylilyfield",

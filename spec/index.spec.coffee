@@ -112,3 +112,27 @@ describe 'coffee-annotate', ->
     expect(z()).toBe 'z'
     expect(z.annotations.x).toBeDefined
     expect(found).toBe yes
+
+  it 'should read non-inherited annotations on method', ->
+
+    foundw = no
+
+    x = annotate.noAttr 'x'
+    y = annotate 'y'
+    w = annotate.class 'w', (c) ->
+      foundw = yes
+      c
+
+    w class A
+
+      x \
+      y(k: 'v') \
+      z: -> 'z'
+
+    a = new A
+
+    expect(a.z()).toBe 'z'
+    expect(a.z.annotations.x).toBeDefined
+    expect(a.z.annotations.y).toBeDefined
+    expect(a.z.annotations.y.k).toBe 'v'
+    expect(foundw).toBe yes

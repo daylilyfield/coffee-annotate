@@ -13,6 +13,8 @@ npm i -S coffee-annotate
 How to Use
 ----------
 
+### Inheritance Usage
+
 coffee-annotate stores annotation informations into the method property named `annotations`.
 
 ```coffeescript
@@ -57,6 +59,31 @@ b = new B
 b.doStuff() # print 'enter doStuff' and 'exit doStuff'
 ```
 
+### Non-Inheritance Usage
+
+i know you don't like to use inheritance to apply annotations to methods. coffee-annotate doesn't need to use annotations inherited from parent class.
+
+```coffeescript
+x = annotate.class 'x'
+y = annotate 'y'
+z = annotate 'z'
+
+x class A
+
+ y(key: 'y') \
+ z(key: 'z') \
+ doStuff: ->
+   # do something
+
+a = new A
+
+console.log a.doStuff.annotations.y # print {key: 'y'}
+console.log a.doStuff.annotations.z # print {key: 'z'}
+```
+
+
+### Just Function
+
 and if you don't annotate methods but functions, sure you can.
 
 ```coffeescript
@@ -69,6 +96,8 @@ doStuff = $foo(key: 'value') ->
 
 console.log doStuff.annotations.foo # print {key: 'value'}
 ```
+
+### Without Attributes
 
 if your annotation don't need to accept any attributes, you can write annotations with `annotate.noAttr` function.
 
@@ -89,6 +118,10 @@ b = new B
 
 console.log b.doStuff.annotations.foo # print {key: 'value'}
 ```
+
+
+
+
 
 
 API
