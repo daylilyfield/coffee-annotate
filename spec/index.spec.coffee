@@ -123,6 +123,32 @@ describe 'coffee-annotate', ->
       foundw = yes
       c
 
+    w(k: 'v') class A
+
+      x \
+      y(k: 'v') \
+      z: -> 'z'
+
+    a = new A
+
+    expect(A.annotations.w).toBeDefined
+    expect(A.annotations.w.k).toBe 'v'
+    expect(a.z()).toBe 'z'
+    expect(a.z.annotations.x).toBeDefined
+    expect(a.z.annotations.y).toBeDefined
+    expect(a.z.annotations.y.k).toBe 'v'
+    expect(foundw).toBe yes
+
+  it 'should read non-inherited no-attiributs annotations on method', ->
+
+    foundw = no
+
+    x = annotate.noAttr 'x'
+    y = annotate 'y'
+    w = annotate.class.noAttr 'w', (c) ->
+      foundw = yes
+      c
+
     w class A
 
       x \
@@ -131,6 +157,7 @@ describe 'coffee-annotate', ->
 
     a = new A
 
+    expect(A.annotations.w).toBeDefined
     expect(a.z()).toBe 'z'
     expect(a.z.annotations.x).toBeDefined
     expect(a.z.annotations.y).toBeDefined

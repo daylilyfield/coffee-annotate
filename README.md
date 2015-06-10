@@ -64,7 +64,7 @@ b.doStuff() # print 'enter doStuff' and 'exit doStuff'
 i know you don't like to use inheritance to apply annotations to methods. coffee-annotate doesn't need to use annotations inherited from parent class.
 
 ```coffeescript
-x = annotate.class 'x'
+x = annotate.class.noAttr 'x'
 y = annotate 'y'
 z = annotate 'z'
 
@@ -77,14 +77,14 @@ x class A
 
 a = new A
 
+console.log a.annotations.x? # print true
 console.log a.doStuff.annotations.y # print {key: 'y'}
 console.log a.doStuff.annotations.z # print {key: 'z'}
 ```
 
-
 ### Just Function
 
-and if you don't annotate methods but functions, sure you can.
+if you don't annotate methods but functions, sure you can.
 
 ```coffeescript
 annotate = require 'coffee-annotate'
@@ -119,11 +119,6 @@ b = new B
 console.log b.doStuff.annotations.foo # print {key: 'value'}
 ```
 
-
-
-
-
-
 API
 ---
 
@@ -138,13 +133,33 @@ API
   `decorator` for the actual method or function. it must return a function even
   if you don't need to decorate the function. this parameter is optional.
 
-  `name` property is the annotation's name. and `body` property is the function
-  which is annotated. `attributes` parameter is annotation's arguments, so it
-  could be any type.
+  `name` property is the annotated function's name. and `body` property is the 
+  function which is annotated. `attributes` parameter is annotation's
+  arguments, so it could be any type.
 
 ### annotate.noAttr(name, decorator)
 
-same as `annotate` but annotation can't accept any attributes. 
+same as `annotate` but the annotation can't accept any attributes. 
+
+### annotate.class(name, decorator)
+
+- name: String
+
+  `name` is key of `annotations` property for constructor function aka class. 
+
+- decorator: (clazz: Function), attributes: Any): Function
+
+  `decorator` for the actual class. it must return a constructor function even 
+  if you don't need to decorate the constructor function. this parameter is
+  optional.
+
+  `clazz` property is the annotationed constructor function. `attributes`
+  parameter is annotation's arguments, so it could be any type.
+
+### annotate.class.noAttr(name, decorator)
+
+same as `annotate.class` but the annotation can't accept any attributes.
+
 
 How to Test
 -----------

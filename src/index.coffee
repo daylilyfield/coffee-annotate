@@ -1,10 +1,12 @@
 assign = require 'object-assign'
 
+
 id = (x) -> x
 returnBody = (target) -> target.body
 error = (message) -> throw new Error message
 
 unboundMethods = {}
+
 
 annotate = (name, decorator = returnBody) -> (attributes) ->
   makeAnalyzer name, decorator, attributes, @
@@ -13,13 +15,23 @@ annotate = (name, decorator = returnBody) -> (attributes) ->
 annotate.noAttr = (name, decorator = returnBody) ->
   makeAnalyzer name, decorator, {}
 
-annotate.class = (name, decorator = id) -> (clazz) ->
+
+annotate.class = (name, decorator = id) -> (attributes) ->
+  makeClassAnalyzer name, decorator, attributes
+
+
+annotate.class.noAttr = (name, decorator = id) ->
+  makeClassAnalyzer name, decorator, {}
+
+
+makeClassAnalyzer = (name, decorator, attributes) -> (clazz) ->
   clazz::[k] = v for k, v of unboundMethods
   unboundMethods = {}
-  decorated = decorator clazz
+  decorated = decorator clazz, attributes
   decorated.annotations ?= {}
-  decorated.annotations[name] = {} #TODO class attributes
+  decorated.annotations[name] = attributes
   decorated
+
 
 makeAnalyzer = (name, decorator, attributes, self) -> (functionOrMethod) ->
   target = prepareTarget functionOrMethod
